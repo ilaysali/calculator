@@ -13,6 +13,8 @@ def is_number(token: str) -> bool:
     """
 
     try:
+        if (token[0] == '+' or token[0] == '-'):
+            return False
         float(token)
         return True
     except ValueError:
@@ -45,5 +47,8 @@ def remove_whitespace(expression: str) -> str:
             is_previous_number = False
 
     return expression.replace(' ', '')
+
+
+
 
 

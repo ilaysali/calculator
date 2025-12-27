@@ -1,1 +1,1 @@
-from NumbersInARowException import NumbersInARowException
+from .NumbersInARowException import NumbersInARowException
