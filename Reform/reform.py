@@ -48,7 +48,23 @@ def remove_whitespace(expression: str) -> str:
 
     return expression.replace(' ', '')
 
-
-
-
+def reform_sequence_of_intensity1 (expression: str) -> str:
+    reformed_expression = []
+    minus_count = 0
+    sequence = False
+    for token in expression:
+        if token == '-' or token == '+':
+            if token == '-':
+                minus_count += 1
+            sequence = True
+        else:
+            if sequence:
+                if minus_count % 2 == 0:
+                    reformed_expression.append("+")
+                else:
+                    reformed_expression.append("-")
+                sequence = False
+                minus_count = 0
+            reformed_expression.append(token)
+    return ''.join(reformed_expression)
 
