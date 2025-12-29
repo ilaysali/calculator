@@ -39,12 +39,13 @@ OPERATOR_CONFIG = {
     "$": (5, 7, "Operator"),
     "&": (5, 8, "Operator"),
     "@": (5, 9, "Operator"),
-    "!": (6, 10, "ROperator"),
-    "~": (6, 11, "LOperator"),
 }
 
-# Automatically generate the reverse map (unique ID:operator)
+# Automatically generate the reverse map with only (unique ID:operator)
 ID_TO_OPERATORS = {value[1]: key for key, value in OPERATOR_CONFIG.items()}
+
+# A tuple containing ALL operators that are functioning by right to left logic
+RIGHT_ANNOTATION = ("/",)
 
 def get_operator_config (operator: str) -> tuple:
     """
@@ -120,3 +121,6 @@ def get_operator(operator_id: int) -> str:
         return ID_TO_OPERATORS[operator_id]
     except KeyError:
         raise TokenNotDefineException(f"Invalid expression: {operator_id} character is not defined in calculator")
+
+def get_right_annotation () -> tuple:
+    return RIGHT_ANNOTATION
