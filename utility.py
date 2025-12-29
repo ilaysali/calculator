@@ -47,7 +47,7 @@ OPERATOR_CONFIG = {
 ID_TO_OPERATORS = {value[1]: key for key, value in OPERATOR_CONFIG.items()}
 
 # A tuple containing ALL operators that are functioning by right to left logic
-RIGHT_ANNOTATION = ("/",)
+RIGHT_ANNOTATION = ("^",)
 
 def get_operator_config (operator: str) -> tuple:
     """
