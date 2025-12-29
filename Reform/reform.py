@@ -34,16 +34,16 @@ def remove_whitespace(expression: str) -> str:
 
 def reform_sequence_of_intensity1 (expression: str) -> str:
     """
-        Replaces sequence of -,+ via mathematical logic:
-            even number of - becomes +
-            odd number of - becomes -
-            sequence of + becomes +
+    Replaces sequence of -,+ via mathematical logic:
+        even number of - becomes +
+        odd number of - becomes -
+        sequence of + becomes +
 
-        Args:
-            expression (str): The mathematical expression.
+    Args:
+        expression (str): The mathematical expression.
 
-        Returns:
-            str: The expression with replaced sequence of -,+ via mathematical logic.
+    Returns:
+        str: The expression with replaced sequence of -,+ via mathematical logic.
     """
 
     reformed_expression = []
