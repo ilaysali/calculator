@@ -39,6 +39,8 @@ OPERATOR_CONFIG = {
     "$": (5, 7, "Operator"),
     "&": (5, 8, "Operator"),
     "@": (5, 9, "Operator"),
+    "!": (6, 10, "Unary"),
+    "~": (6, 11, "Unary"),
 }
 
 # Automatically generate the reverse map with only (unique ID:operator)

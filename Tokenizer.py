@@ -4,22 +4,21 @@ from Exceptions import TokenNotDefineException
 
 def tokenize(expression: str ) -> list:
     """
-        Iterates through the mathematical expression Each element in the expression
-        becomes a tuple in the returned list containing (Priority, ID, Type).
+    Iterates through the mathematical expression Each element in the expression
+    becomes a tuple in the returned list containing (Priority, ID, Type).
 
-        Args:
-            expression (str): The mathematical expression.
+    Args:
+        expression (str): The mathematical expression.
 
-        Returns:
-            list: A list of tuples containing (Priority, ID, Type).
+    Returns:
+        list: A list of tuples containing  if operator -(Priority, ID, Type) if number -(value,Number)  .
 
-        Raises:
-            TokenNotDefineException: If the expression contains a character that is not defined.
+    Raises:
+        TokenNotDefineException: If the expression contains a character that is not defined.
     """
 
     lst = []
     number = ""
-    operators = ['+', '-', '*', '/', '@', '^', '%', '$', '&']
 
     for token in expression:
         if is_number(token) or token == '.':
