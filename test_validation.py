@@ -1,7 +1,9 @@
 from Tokenizer import tokenize
+from Parser import parser
 
 def test_tokenize_basic():
-    assert tokenize("5+5") == ["5", "+", "5"]
+    lst = tokenize("3.14+34*(5^3)-9")
+    assert parser(lst) == "3.14,34,5,3,^,*,+,9,-,"
 
 def test_tokenize_complex():
     assert tokenize("12+34*5") == ["12", "+", "34", "*", "5"]

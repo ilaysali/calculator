@@ -1,0 +1,17 @@
+Index: utility.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>def is_number(token: str) -> bool:\r\n    \"\"\"\r\n    Checks if the string token can be converted to a float.\r\n\r\n    Args:\r\n        token (str): The string to check.\r\n\r\n    Returns:\r\n        bool: True if the token is a valid number.\r\n    \"\"\"\r\n\r\n    try:\r\n        # casting str to float that begins with + or - returns true instead of false. (e.g. +5 => needs to return false)\r\n        if token[0] == '+' or token[0] == '-':\r\n            return False\r\n        float(token)\r\n        return True\r\n    except ValueError:\r\n        return False
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/utility.py b/utility.py
+--- a/utility.py	(revision adadffc8645fd4e2fc112c2dc151e9f354327b2a)
++++ b/utility.py	(date 1767003197352)
+@@ -1,3 +1,6 @@
++from unittest import case
++
++
+ def is_number(token: str) -> bool:
+     """
+     Checks if the string token can be converted to a float.
