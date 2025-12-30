@@ -1,6 +1,6 @@
 from Tokenizer import tokenize
 from Parser import parser
-from Reform import reform_sequence_of_intensity1, remove_whitespace
+from Reform import reform_sequence_of_priority1
 
 
 def test_tokenize_basic():
@@ -16,10 +16,7 @@ def test_tokenize_decimals():
     assert parser(lst) == "3.14,34,5,3,^,*,+,9,-,"
 
 def test_tokenize_parentheses():
-    s = remove_whitespace("6----8*9")
-    print(s)
-    s = reform_sequence_of_intensity1(s)
-
-    assert s == "6-+8*9/12!"
+    s = reform_sequence_of_priority1("~-++-6*--+++---8*~--++-+9")
+    assert s == "6*+8*9"
 
 
