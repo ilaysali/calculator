@@ -1,5 +1,5 @@
 from Exceptions import NumbersInARowException
-from utility import is_number
+from utility import is_number,is_operator
 
 
 def remove_whitespace(expression: str) -> str:
@@ -34,8 +34,8 @@ def remove_whitespace(expression: str) -> str:
 def reform_sequence_of_priority1 (expression: str) -> str:
     """
     Replaces sequence of -,+:
-        if at the start of the sequence there is '~':
-            then sequence priority becomes '~' priority (ignores '+' operator)
+        if at the start of the sequence there is operator:
+            then sequence becomes part of number(max priority)
         else:
             reduce sequence of -,+ via mathematical logic.
 
@@ -49,34 +49,25 @@ def reform_sequence_of_priority1 (expression: str) -> str:
     reformed_expression = []
     minus_count = 0
     sequence = False
-    tilda_at_start_of_sequence = False
+    operator_at_start_of_sequence = False
 
     for token in expression:
-        if token == '-' or token == '+':
+        if (token == '-' or token == '+') and operator_at_start_of_sequence:
             if token == '-':
-                if tilda_at_start_of_sequence:
-                    reformed_expression.append("~")
-
-                else:
-                    minus_count += 1
-                    sequence = True
-            elif not tilda_at_start_of_sequence:
-                sequence = True
+                minus_count += 1
+            sequence = True
 
         else:
-            tilda_at_start_of_sequence = False
+            operator_at_start_of_sequence = False
             if sequence:
-                if minus_count % 2 == 0:
-                    reformed_expression.append("+")
-
-                else:
-                    reformed_expression.append("-")
+                if minus_count % 2 != 0:
+                    reformed_expression.append("M")
 
                 sequence = False
                 minus_count = 0
 
-            elif token == '~':
-                tilda_at_start_of_sequence = True
+            if is_operator(token):
+                operator_at_start_of_sequence = True
 
             reformed_expression.append(token)
 

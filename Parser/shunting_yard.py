@@ -1,8 +1,21 @@
 from utility import get_operator,get_right_annotation
-from Exceptions import MismatchedParenthesesException,InvalidOperandException,IntegerExpectedException
+from Exceptions import MismatchedParenthesesException
 
-# NOTE does not handle ~ yet
+
 def parser(tokenize_expression: list) -> list:
+    """
+    Manage the postfix process, makes tokenized list as postfix.
+
+    Args:
+        tokenize_expression (list): expression as a list of tuples.
+
+    Returns:
+        list: expression as postfix.
+
+    Raises:
+        MismatchedParenthesesException: If not the same number of left and right parentheses.
+    """
+
     output = []
     operators = []
 
@@ -10,7 +23,7 @@ def parser(tokenize_expression: list) -> list:
         if token[-1] == "Number":
             output.append(token)
 
-        elif token[-1] == "Operator":
+        elif token[-1] == "Operator" or token[-1] == "Unary":
             while (operators and operators[-1][-1] != "LParentheses" and
                 (operators[-1][0] > token[0] or (operators[-1][0] == token[0] and
                     get_operator(token[1]) not in get_right_annotation()))):
@@ -27,9 +40,6 @@ def parser(tokenize_expression: list) -> list:
                 raise MismatchedParenthesesException("Invalid parentheses, there are more ')' then there are '('")
             operators.pop()
 
-        elif token[-1] == "Unary" and get_operator(token[1]) == "!":
-            output.append(factorial(output.pop()))
-
     while operators:
         if operators[-1][-1] == "LParentheses":
             raise MismatchedParenthesesException("Invalid parentheses, there are more '(' then there are ')'")
@@ -37,16 +47,3 @@ def parser(tokenize_expression: list) -> list:
 
     return output
 
-def factorial (number: tuple) -> tuple:
-    if number[-1] != "Number":
-        raise InvalidOperandException(f"Factorial (!) can only be applied to numbers, not '{number[0]}'")
-    if number[0].find(".") != -1:
-        raise IntegerExpectedException(f"Factorial requires an integer cant get handle float")
-
-    return str(solve_factorial(int(number[0]))), number[-1]
-
-def solve_factorial(number: int) -> int:
-    factorial_number = 1
-    for i in range(2, number + 1):
-        factorial_number *= i
-    return factorial_number

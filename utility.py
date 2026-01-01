@@ -39,8 +39,10 @@ OPERATOR_CONFIG = {
     "$": (5, 7, "Operator"),
     "&": (5, 8, "Operator"),
     "@": (5, 9, "Operator"),
-    "!": (6, 10, "Unary"),
+    "M": (7, 14, "Unary"),
     "~": (6, 11, "Unary"),
+    "!": (6, 10, "Unary"),
+    "#": (6,15,"Unary"),
 }
 
 # Automatically generate the reverse map with only (unique ID:operator)
@@ -125,4 +127,15 @@ def get_operator(operator_id: int) -> str:
         raise TokenNotDefineException(f"Invalid expression: {operator_id} character is not defined in calculator")
 
 def get_right_annotation () -> tuple:
+    """ returns a tuple containing all operators that function from right to left. (ex: ^)"""
     return RIGHT_ANNOTATION
+
+def is_operator(operator: str)  -> bool:
+    """ checks if string is an operator, '(' , ')' is not included as operators """
+    try:
+        if operator == "(" or operator == ")":
+            return False
+        get_id(operator)
+        return True
+    except TokenNotDefineException:
+        return False

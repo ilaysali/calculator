@@ -1,4 +1,4 @@
-from utility import *
+from utility import is_number,get_operator_config
 from Exceptions import TokenNotDefineException
 
 
