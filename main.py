@@ -1,16 +1,15 @@
-# This is a sample Python script.
-
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
-
-
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+from Evaluate import evaluate_postfix
+from Parser import parser
+from Reform import *
+from Tokenizer import tokenize
 
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+def calc (string: str):
+    string = remove_whitespace(string)
+    string = reform_sequence_of_priority1(string)
+    print(string)
+    lst = tokenize(string)
+    print(lst)
+    lst = parser(lst)
+    print(lst)
+    return evaluate_postfix(lst)
