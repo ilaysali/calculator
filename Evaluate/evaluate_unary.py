@@ -11,7 +11,7 @@ def solve_unary (token: tuple, number: tuple) -> float:
         number (tuple): number
 
     Returns:
-        float: The result for calculating number as token operator.
+        float: The result for calculating number per unary operator.
 
     Raises:
         TokenNotDefineException: If token not defined as unary.
@@ -43,9 +43,10 @@ def solve_tilda (number: tuple) -> float:
     return  float(number[0]) * -1
 
 def factorial (number: tuple) -> float:
-    if number[0].find(".") != -1:
+    f_number = float(number[0])
+    if  f_number % 1 != 0:
         raise IntegerExpectedException(f"Factorial requires an integer cant get handle float")
-    return solve_factorial(int(number[0]))
+    return solve_factorial(int(f_number))
 
 def solve_factorial(number: int) -> int:
     factorial_number = 1

@@ -12,4 +12,6 @@ def calc (string: str):
     print(lst)
     lst = parser(lst)
     print(lst)
-    return evaluate_postfix(lst)
+    result = evaluate_postfix(lst)
+    print(result)
+    return result

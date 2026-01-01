@@ -1,5 +1,5 @@
-from evaluate_operator import solve_operator
-from evaluate_unary import solve_unary
+from .evaluate_operator import solve_operator
+from .evaluate_unary import solve_unary
 from Exceptions import IntegerExpectedException
 
 
@@ -24,10 +24,10 @@ def evaluate_postfix(expression_after_postfix: list) -> float:
             numbers_to_calculate.append(token)
 
         elif token[-1] == "Unary":
-            numbers_to_calculate.append((solve_unary(token, numbers_to_calculate.pop()), "Number"))
+            numbers_to_calculate.append((str(solve_unary(token, numbers_to_calculate.pop())), "Number"))
 
         else:
-            numbers_to_calculate.append((solve_operator(token,numbers_to_calculate.pop(),numbers_to_calculate.pop()), "Number"))
+            numbers_to_calculate.append((str(solve_operator(token,numbers_to_calculate.pop(),numbers_to_calculate.pop())), "Number"))
 
     if numbers_to_calculate:
         return  float(numbers_to_calculate.pop()[0])

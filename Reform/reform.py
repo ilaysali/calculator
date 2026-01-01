@@ -51,6 +51,9 @@ def reform_sequence_of_priority1 (expression: str) -> str:
     sequence = False
     operator_at_start_of_sequence = False
 
+    if expression[0] == '-':
+        expression = "0" + expression
+
     for token in expression:
         if (token == '-' or token == '+') and operator_at_start_of_sequence:
             if token == '-':
