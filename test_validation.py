@@ -1,5 +1,5 @@
 import pytest
-from main import calc
+from main import calculate
 
 
 valid_test_cases = [
@@ -19,13 +19,13 @@ def test_tokenize_basic():
     pass
 
 def test_tokenize_complex():
-    pass
+    assert calculate("4~@3") == 45.289953367762976
 
 def test_tokenize_decimals():
-    pass
+    assert calculate("((625 - 144)^0.5 + 3 ^ 4) / ((7 - 2) ^ 2)*(9 + 6 / 3)") == 45.289953367762976
 
 @pytest.mark.parametrize("expression, expected", valid_test_cases)
 def test_calculator_valid_inputs(expression, expected):
-    assert calc(expression) == expected
+    assert calculate(expression) == expected
 
 

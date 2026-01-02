@@ -19,12 +19,19 @@ def solve_unary (token: tuple, number: tuple) -> float:
     if number[-1] != "Number":
         raise InvalidOperandException(f"can only be applied to numbers, not '{number[0]}'")
 
+    if get_operator(token[2]) == "left":
+        return left_unary(token, number)
+    return right_unary(token, number)
+
+def left_unary (token: tuple, number: tuple) -> float:
     if get_operator(token[1]) == "M":
         return solve_M(number)
 
     if get_operator(token[1]) == "~":
         return solve_tilda(number)
+    raise TokenNotDefineException("did you forgot to add to here the new left unary?")
 
+def right_unary (token: tuple, number: tuple) -> float:
     if not is_number(number[0]):
         raise IntegerExpectedException("can only be applied to positive numbers")
 
@@ -33,8 +40,7 @@ def solve_unary (token: tuple, number: tuple) -> float:
 
     if get_operator(token[1]) == "#":
         return sum_digits(number)
-
-    raise TokenNotDefineException("did you forgot to add to here the new left unary?")
+    raise TokenNotDefineException("did you forgot to add to here the new right unary?")
 
 def solve_M (number: tuple) -> float:
     return  float(number[0]) * -1

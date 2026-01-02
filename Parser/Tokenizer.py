@@ -1,5 +1,5 @@
 from utility import is_number,get_operator_config
-from Exceptions import TokenNotDefineException
+from validation import validate_input
 
 
 def tokenize(expression: str ) -> list:
@@ -26,16 +26,15 @@ def tokenize(expression: str ) -> list:
 
         else:
             if number != "":
-                lst.append((number,"Number"))
+                whole_number = (number,"Number")
+                validate_input(whole_number, lst[-1] if lst else None)
+                lst.append(whole_number)
                 number = ""
 
-            try:
-                lst.append(get_operator_config(token))
-
-            except TokenNotDefineException:
-                raise TokenNotDefineException(f"Invalid expression: {token} character is not defined in calculator")
+            token_tuple = get_operator_config(token)
+            validate_input(token_tuple, lst[-1] if lst else None)
+            lst.append(token_tuple)
 
     if number != "":
         lst.append((number, "Number"))
-
     return lst

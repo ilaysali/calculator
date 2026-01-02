@@ -1,4 +1,4 @@
-from Exceptions import NumbersInARowException
+from Exceptions import NumbersInARowException, TokenNotDefineException
 from utility import is_number,is_operator
 
 
@@ -28,8 +28,8 @@ def remove_whitespace(expression: str) -> str:
 
         else:
             is_previous_number = False
-
-    return expression.replace(' ', '')
+    expression = expression.replace(' ', '')
+    return expression.replace('\t' ,'')
 
 def reform_sequence_of_priority1 (expression: str) -> str:
     """
@@ -45,6 +45,8 @@ def reform_sequence_of_priority1 (expression: str) -> str:
     Returns:
         str: The expression with replaced sequence of -,+.
     """
+    if 'M' in expression:
+        raise TokenNotDefineException("Invalid expression: 'M' character is not defined in calculator")
 
     reformed_expression = []
     minus_count = 0

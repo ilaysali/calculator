@@ -16,6 +16,9 @@ def is_number(token: str) -> bool:
     if not token:
         return False
 
+    if type(token) != str:
+        return False
+
     # This logic forces "-5" to be read as Operator(-) then Number(5)
     if token[0] in ('+', '-'):
         return False
@@ -39,10 +42,10 @@ OPERATOR_CONFIG = {
     "$": (5, 7, "Operator"),
     "&": (5, 8, "Operator"),
     "@": (5, 9, "Operator"),
-    "M": (7, 14, "Unary"),
-    "~": (6, 11, "Unary"),
-    "!": (6, 10, "Unary"),
-    "#": (6,15,"Unary"),
+    "M": (7, 14, "left", "Unary"),
+    "~": (6, 11, "left", "Unary"),
+    "!": (6, 10, "right", "Unary"),
+    "#": (6,15, "right", "Unary"),
 }
 
 # Automatically generate the reverse map with only (unique ID:operator)
