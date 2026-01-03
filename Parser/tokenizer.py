@@ -1,3 +1,4 @@
+from Exceptions import InvalidInputException
 from utility import is_number, get_operator_config
 from validation import validate_input
 
@@ -11,7 +12,10 @@ def tokenize(expression: str) -> list:
         expression (str): The mathematical expression.
 
     Returns:
-        list: A list of tuples containing  if operator -(Priority, ID, Type) if number -(value,Number)  .
+        list: A list of tuples containing  if operator -(Priority, ID, Type) if number -(value,Number).
+
+    Raises:
+        InvalidInputException: If input dot as a number.
     """
 
     lst = []
@@ -23,6 +27,8 @@ def tokenize(expression: str) -> list:
 
         else:
             if number != "":
+                if number == '.':
+                    raise InvalidInputException("Invalid input: dot alone isnt a number")
                 whole_number = (number, "Number")
                 validate_input(whole_number, lst[-1] if lst else None)
                 lst.append(whole_number)
