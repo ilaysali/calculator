@@ -10,13 +10,15 @@ def is_number(token: str) -> bool:
 
     Returns:
         bool: True if the token is a valid number.
+
+    raise InvalidInputException: If the token is not defined in calculator.
     """
 
     # Handle empty strings to prevent IndexError
     if not token:
         return False
 
-    if type(token) != str:
+    if not isinstance(token, str):
         return False
 
     # This logic forces "-5" to be read as Operator(-) then Number(5)
@@ -48,7 +50,7 @@ OPERATOR_CONFIG = {
     "M": (7, 14, "left", "Unary"),
     "~": (6, 11, "left", "Unary"),
     "!": (6, 10, "right", "Unary"),
-    "#": (6,15, "right", "Unary"),
+    "#": (6, 15, "right", "Unary"),
 }
 
 # Automatically generate the reverse map with only (unique ID:operator)
@@ -57,7 +59,7 @@ ID_TO_OPERATORS = {value[1]: key for key, value in OPERATOR_CONFIG.items()}
 # A tuple containing ALL operators that are functioning by right to left logic
 RIGHT_ANNOTATION = ("^",)
 
-def get_operator_config (operator: str) -> tuple:
+def get_operator_config(operator: str) -> tuple:
     """
     Retrieves the full configuration tuple (Priority, ID, Type) for a given operator.
 
@@ -75,26 +77,7 @@ def get_operator_config (operator: str) -> tuple:
     except KeyError:
         raise TokenNotDefineException(f"Invalid expression in get_operator_config: '{operator}' is not defined in calculator")
 
-def get_priority (operator: str) -> int:
-    """
-    Gets the priority of a given operator from the OPERATOR_CONFIG map.
-
-    Args:
-        operator (str): TThe operator symbol.
-
-    Return:
-        int: The priority value.
-
-    Raises:
-        TokenNotDefineException: If the operator is not defined.
-    """
-
-    try:
-        return OPERATOR_CONFIG[operator][0]
-    except KeyError:
-        raise TokenNotDefineException(f"Invalid expression in get_priority: {operator} character is not defined in calculator")
-
-def get_id (operator: str) -> int:
+def _get_id(operator: str) -> int:
     """
     Gets the unique id of a given operator from the OPERATOR_CONFIG map.
 
@@ -132,16 +115,16 @@ def get_operator(operator_id: int) -> str:
     except KeyError:
         raise TokenNotDefineException(f"Invalid expression in get_operator: {operator_id} character is not defined in calculator")
 
-def get_right_annotation () -> tuple:
+def get_right_annotation() -> tuple:
     """ returns a tuple containing all operators that function from right to left. (ex: ^)"""
     return RIGHT_ANNOTATION
 
-def is_operator(operator: str)  -> bool:
+def is_operator(operator: str) -> bool:
     """ checks if string is an operator, '(' , ')' is not included as operators """
     try:
         if operator == "(" or operator == ")":
             return False
-        get_id(operator)
+        _get_id(operator)
         return True
     except TokenNotDefineException:
         return False

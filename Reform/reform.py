@@ -1,5 +1,5 @@
 from Exceptions import NumbersInARowException, TokenNotDefineException, InvalidInputException
-from utility import is_number,is_operator
+from utility import is_number, is_operator
 
 
 def remove_whitespace(expression: str) -> str:
@@ -29,9 +29,9 @@ def remove_whitespace(expression: str) -> str:
         else:
             is_previous_number = False
     expression = expression.replace(' ', '')
-    return expression.replace('\t' ,'')
+    return expression.replace('\t', '')
 
-def reform_sequence_of_priority1 (expression: str) -> str:
+def reform_sequence_of_priority1(expression: str) -> str:
     """
     Replaces sequence of -,+:
         if at the start of the sequence there is operator:
@@ -44,7 +44,13 @@ def reform_sequence_of_priority1 (expression: str) -> str:
 
     Returns:
         str: The expression with replaced sequence of -,+.
+
+    Raises:
+        TokenNotDefineException if there is character 'M' in expression.
+        InvalidInputException sequence of '-' and '+' must come before a number.
     """
+
+    # This function can add valid 'M' characters so check in advanced for invalid 'M' character
     if 'M' in expression:
         raise TokenNotDefineException("in reform_sequence_of_priority1: Invalid expression: 'M' character is not defined in calculator")
 

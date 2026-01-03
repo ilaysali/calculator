@@ -1,4 +1,4 @@
-from utility import get_operator,get_right_annotation
+from utility import get_operator, get_right_annotation
 from Exceptions import MismatchedParenthesesException
 
 
@@ -30,7 +30,7 @@ def parser(tokenize_expression: list) -> list:
                 output.append(operators.pop())
             operators.append(token)
 
-        elif token[-1] == "LParentheses" :
+        elif token[-1] == "LParentheses":
             operators.append(token)
 
         elif token[-1] == "RParentheses":

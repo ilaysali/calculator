@@ -1,11 +1,11 @@
-from utility import is_number,get_operator_config
+from utility import is_number, get_operator_config
 from validation import validate_input
 
 
-def tokenize(expression: str ) -> list:
+def tokenize(expression: str) -> list:
     """
     Iterates through the mathematical expression Each element in the expression
-    becomes a tuple in the returned list containing (Priority, ID, Type).
+    becomes a tuple in the returned list containing (Priority, ID, Type) if valid.
 
     Args:
         expression (str): The mathematical expression.
@@ -23,7 +23,7 @@ def tokenize(expression: str ) -> list:
 
         else:
             if number != "":
-                whole_number = (number,"Number")
+                whole_number = (number, "Number")
                 validate_input(whole_number, lst[-1] if lst else None)
                 lst.append(whole_number)
                 number = ""

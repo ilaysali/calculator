@@ -1,68 +1,80 @@
-from Exceptions import *
-from utility import get_operator,is_number
+from Exceptions import TokenNotDefineException, InvalidOperandException, IntegerExpectedException
+from utility import get_operator, is_number
 
 
-def solve_unary (token: tuple, number: tuple) -> float:
+MAX_FACTORIAL_INPUT = 160
+
+def solve_unary(token: tuple, operand: tuple) -> float:
     """
-    Manage the evaluation process for unary operators, decides what function need to handle each token.
+    Manages the evaluation process for unary operators.
+    Decides which function should handle the token based on its associativity (left/right).
 
     Args:
-        token (tuple): unary operator.
-        number (tuple): number
+        token (tuple): The unary operator token (Priority, ID, Type, Direction).
+        operand (tuple): The number token to apply the operator on.
 
     Returns:
-        float: The result for calculating number per unary operator.
+        float: The calculation result.
 
     Raises:
-        TokenNotDefineException: If token not defined as unary.
-    """
-    if number[-1] != "Number":
-        raise InvalidOperandException(f"in solve_unary: can only be applied to numbers, not '{number[0]}'")
+        InvalidOperandException: If the operand is not a number.
+     """
+    if operand[-1] != "Number":
+        raise InvalidOperandException(f"in solve_unary: can only be applied to numbers, not '{operand[0]}'")
 
     if token[2] == "left":
-        return left_unary(token, number)
-    return right_unary(token, number)
+        return _handle_left_unary(token, operand)
+    return _handle_right_unary(token, operand)
 
-def left_unary (token: tuple, number: tuple) -> float:
-    if get_operator(token[1]) == "M":
-        return solve_M(number)
+def _handle_left_unary(token: tuple, operand: tuple) -> float:
+    """ Handles left-associative unary operators. """
 
-    if get_operator(token[1]) == "~":
-        return solve_tilda(number)
+    operator_symbol = get_operator(token[1])
+    if operator_symbol == "M":
+        return _solve_negation(operand)
+
+    if operator_symbol == "~":
+        return _solve_tilda(operand)
+
     raise TokenNotDefineException("in left_unary: did you forgot to add to here the new left unary?")
 
-def right_unary (token: tuple, number: tuple) -> float:
-    if not is_number(number[0]):
+def _handle_right_unary(token: tuple, operand: tuple) -> float:
+    """ Handles right-associative unary operators. """
+
+    if not is_number(operand[0]):
         raise IntegerExpectedException("in right_unary: can only be applied to positive numbers")
+    operator_symbol = get_operator(token[1])
 
-    if get_operator(token[1]) == "!":
-        return factorial(number)
+    if operator_symbol == "!":
+        return _calculate_factorial_wrapper(operand)
 
-    if get_operator(token[1]) == "#":
-        return sum_digits(number)
+    if operator_symbol == "#":
+        return _sum_digits(operand)
     raise TokenNotDefineException("in right_unary: did you forgot to add to here the new right unary?")
 
-def solve_M (number: tuple) -> float:
-    return  float(number[0]) * -1
+def _solve_negation(operand: tuple) -> float:
+    return float(operand[0]) * -1
 
-def solve_tilda (number: tuple) -> float:
-    return  float(number[0]) * -1
+def _solve_tilda(operand: tuple) -> float:
+    return float(operand[0]) * -1
 
-def factorial (number: tuple) -> float:
-    f_number = float(number[0])
-    if  f_number % 1 != 0:
+def _calculate_factorial_wrapper(operand: tuple) -> float:
+    value = float(operand[0])
+    if value % 1 != 0:
         raise IntegerExpectedException(f"in factorial: Factorial requires an integer cant get handle float")
-    return solve_factorial(int(f_number))
+    if value > MAX_FACTORIAL_INPUT:
+        raise OverflowError("Result too large can only calculate up to 160!")
+    return _solve_factorial(int(value))
 
-def solve_factorial(number: int) -> int:
+def _solve_factorial(operand: int) -> int:
     factorial_number = 1
-    for i in range(2, number + 1):
+    for i in range(2, operand + 1):
         factorial_number *= i
     return factorial_number
 
-def sum_digits (number: tuple) -> int:
+def _sum_digits(operand: tuple) -> int:
     sum_of_digits = 0
-    for digit in number[0]:
+    for digit in operand[0]:
         if digit != ".":
             sum_of_digits += int(digit)
     return sum_of_digits

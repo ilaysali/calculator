@@ -27,8 +27,8 @@ def evaluate_postfix(expression_after_postfix: list) -> float:
             numbers_to_calculate.append((str(solve_unary(token, numbers_to_calculate.pop())), "Number"))
 
         else:
-            numbers_to_calculate.append((str(solve_operator(token,numbers_to_calculate.pop(),numbers_to_calculate.pop())), "Number"))
+            numbers_to_calculate.append((str(solve_operator(token, numbers_to_calculate.pop(), numbers_to_calculate.pop())), "Number"))
 
     if numbers_to_calculate:
-        return  float(numbers_to_calculate.pop()[0])
+        return float(numbers_to_calculate.pop()[0])
     raise IntegerExpectedException("Empty input")

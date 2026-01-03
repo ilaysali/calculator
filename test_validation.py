@@ -51,7 +51,7 @@ def test_tokenize_basic():
     pass
 
 def test_tokenize_complex():
-    assert calculate("") == 45.289953367762976
+    assert calculate("1200^100+ 1209^100") == 45.289953367762976
 
 def test_tokenize_decimals():
     assert calculate("2#3") == 45.289953367762976

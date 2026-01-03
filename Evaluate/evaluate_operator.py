@@ -3,70 +3,76 @@ from Exceptions import TokenNotDefineException
 import math
 
 
-def solve_operator (token: tuple, number2: tuple, number1: tuple) -> float:
+def solve_operator(token: tuple, operand_b: tuple, operand_a: tuple) -> float:
     """
-    Manage the evaluation process for operators, decides what function need to handle each token.
+    Manages the evaluation process for binary operators.
+    (operand_b is popped first from list, so it is the first operand).
 
     Args:
-        token (tuple): operator.
-        number1 (tuple): number
-        number2 (tuple): number
+        token (tuple): The operator token.
+        operand_b (tuple): The second number (right side).
+        operand_a (tuple): The first number (left side).
 
     Returns:
-        float: The result for calculating number as token operator.
+        float: The result of (operand_a OP operand_b).
 
     Raises:
-        TokenNotDefineException: If token not defined as operator.
+        TokenNotDefineException: If the operator is unknown.
     """
+
+    val_a = float(operand_a[0])
+    val_b = float(operand_b[0])
+
     match get_operator(token[1]):
         case "+":
-            return solve_plus(number1,number2)
+            return _solve_plus(val_a, val_b)
         case "-":
-            return solve_minus(number1, number2)
+            return _solve_minus(val_a, val_b)
         case "*":
-            return solve_multiply(number1, number2)
+            return _solve_multiply(val_a, val_b)
         case "/":
-            return solve_divide(number1, number2)
+            return _solve_divide(val_a, val_b)
         case "^":
-            return solve_pow(number1, number2)
+            return _solve_pow(val_a, val_b)
         case "%":
-            return solve_modulo(number1, number2)
+            return _solve_modulo(val_a, val_b)
         case "$":
-            return solve_max(number1, number2)
+            return _solve_max(val_a, val_b)
         case "&":
-            return solve_min(number1, number2)
+            return _solve_min(val_a, val_b)
         case "@":
-            return solve_avg(number1, number2)
+            return _solve_avg(val_a, val_b)
         case _:
             raise TokenNotDefineException("in solve_operator: did you forgot to add to here the new operator?")
 
-def solve_plus (number1: tuple, number2: tuple) -> float:
-    return  float(number1[0]) + float(number2[0])
+def _solve_plus(val_a: float, val_b: float) -> float:
+    return _check_too_big(val_a + val_b)
 
-def solve_minus (number1: tuple, number2: tuple) -> float:
-    return  float(number1[0]) - float(number2[0])
+def _solve_minus(val_a: float, val_b: float) -> float:
+    return _check_too_big(val_a - val_b)
 
-def solve_multiply (number1: tuple, number2: tuple) -> float:
-    return  float(number1[0]) * float(number2[0])
+def _solve_multiply(val_a: float, val_b: float) -> float:
+    return _check_too_big(val_a * val_b)
 
-def solve_divide (number1: tuple, number2: tuple) -> float:
-    return  float(number1[0]) / float(number2[0])
+def _solve_divide(val_a: float, val_b: float) -> float:
+    return _check_too_big(val_a / val_b)
 
-def solve_pow (number1: tuple, number2: tuple) -> float:
-    return  math.pow(float(number1[0]), float(number2[0]))
+def _solve_pow(val_a: float, val_b: float) -> float:
+    return math.pow(val_a, val_b)
 
-def solve_modulo (number1: tuple, number2: tuple) -> float:
-    return  float(number1[0]) % float(number2[0])
+def _solve_modulo(val_a: float, val_b: float) -> float:
+    return val_a % val_b
 
-def solve_max (number1: tuple, number2: tuple) -> float:
-    num1 = float(number1[0])
-    num2 = float(number2[0])
-    return num1 if num1 > num2 else num2
+def _solve_max(val_a: float, val_b: float) -> float:
+    return val_a if val_a > val_b else val_b
 
-def solve_min (number1: tuple, number2: tuple) -> float:
-    num1 = float(number1[0])
-    num2 = float(number2[0])
-    return num1 if num1 < num2 else num2
+def _solve_min(val_a: float, val_b: float) -> float:
+    return val_a if val_a < val_b else val_b
 
-def solve_avg (number1: tuple, number2: tuple) -> float:
-    return  (float(number1[0]) + float(number2[0])) / 2
+def _solve_avg(val_a: float, val_b: float) -> float:
+    return _check_too_big((val_a + val_b) / 2)
+
+def _check_too_big(result: float) -> float:
+    if result == float('inf') or result == float('-inf'):
+        raise OverflowError("Result too large")
+    return result
