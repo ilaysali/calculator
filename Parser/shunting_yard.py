@@ -37,12 +37,12 @@ def parser(tokenize_expression: list) -> list:
             while operators and operators[-1][-1] != "LParentheses":
                 output.append(operators.pop())
             if not operators:
-                raise MismatchedParenthesesException("Invalid parentheses, there are more ')' then there are '('")
+                raise MismatchedParenthesesException("in parser: Invalid parentheses, there are more ')' then there are '('")
             operators.pop()
 
     while operators:
         if operators[-1][-1] == "LParentheses":
-            raise MismatchedParenthesesException("Invalid parentheses, there are more '(' then there are ')'")
+            raise MismatchedParenthesesException("in parser: Invalid parentheses, there are more '(' then there are ')'")
         output.append(operators.pop())
 
     return output

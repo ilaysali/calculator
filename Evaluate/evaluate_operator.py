@@ -38,7 +38,7 @@ def solve_operator (token: tuple, number2: tuple, number1: tuple) -> float:
         case "@":
             return solve_avg(number1, number2)
         case _:
-            raise TokenNotDefineException("did you forgot to add to here the new operator?")
+            raise TokenNotDefineException("in solve_operator: did you forgot to add to here the new operator?")
 
 def solve_plus (number1: tuple, number2: tuple) -> float:
     return  float(number1[0]) + float(number2[0])

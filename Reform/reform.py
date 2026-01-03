@@ -1,4 +1,4 @@
-from Exceptions import NumbersInARowException, TokenNotDefineException
+from Exceptions import NumbersInARowException, TokenNotDefineException, InvalidInputException
 from utility import is_number,is_operator
 
 
@@ -23,7 +23,7 @@ def remove_whitespace(expression: str) -> str:
     for token in divided_by_whitespace:
         if is_number(token):
             if is_previous_number:
-                raise NumbersInARowException("Invalid syntax: Two numbers in a row")
+                raise NumbersInARowException("in remove_whitespace: Invalid syntax: Two numbers in a row")
             is_previous_number = True
 
         else:
@@ -46,7 +46,7 @@ def reform_sequence_of_priority1 (expression: str) -> str:
         str: The expression with replaced sequence of -,+.
     """
     if 'M' in expression:
-        raise TokenNotDefineException("Invalid expression: 'M' character is not defined in calculator")
+        raise TokenNotDefineException("in reform_sequence_of_priority1: Invalid expression: 'M' character is not defined in calculator")
 
     reformed_expression = []
     minus_count = 0
@@ -65,6 +65,9 @@ def reform_sequence_of_priority1 (expression: str) -> str:
         else:
             operator_at_start_of_sequence = False
             if sequence:
+                if not is_number(token):
+                    raise InvalidInputException("Invalid input in reform_sequence_of_priority1: sequence ('-','+') must come before a number")
+
                 if minus_count % 2 != 0:
                     reformed_expression.append("M")
 

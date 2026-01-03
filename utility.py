@@ -1,4 +1,4 @@
-from Exceptions import TokenNotDefineException
+from Exceptions import TokenNotDefineException, InvalidInputException
 
 
 def is_number(token: str) -> bool:
@@ -22,6 +22,9 @@ def is_number(token: str) -> bool:
     # This logic forces "-5" to be read as Operator(-) then Number(5)
     if token[0] in ('+', '-'):
         return False
+
+    if token.count('.') > 1:
+        raise InvalidInputException(f"Invalid expression in is_number: {token} character is not defined in calculator")
 
     try:
         float(token)
@@ -70,7 +73,7 @@ def get_operator_config (operator: str) -> tuple:
     try:
         return OPERATOR_CONFIG[operator]
     except KeyError:
-        raise TokenNotDefineException(f"Invalid expression: '{operator}' is not defined in calculator")
+        raise TokenNotDefineException(f"Invalid expression in get_operator_config: '{operator}' is not defined in calculator")
 
 def get_priority (operator: str) -> int:
     """
@@ -89,7 +92,7 @@ def get_priority (operator: str) -> int:
     try:
         return OPERATOR_CONFIG[operator][0]
     except KeyError:
-        raise TokenNotDefineException(f"Invalid expression: {operator} character is not defined in calculator")
+        raise TokenNotDefineException(f"Invalid expression in get_priority: {operator} character is not defined in calculator")
 
 def get_id (operator: str) -> int:
     """
@@ -108,7 +111,7 @@ def get_id (operator: str) -> int:
     try:
         return OPERATOR_CONFIG[operator][1]
     except KeyError:
-        raise TokenNotDefineException(f"Invalid expression: {operator} character is not defined in calculator")
+        raise TokenNotDefineException(f"Invalid expression in get_id: {operator} character is not defined in calculator")
 
 def get_operator(operator_id: int) -> str:
     """
@@ -127,7 +130,7 @@ def get_operator(operator_id: int) -> str:
     try:
         return ID_TO_OPERATORS[operator_id]
     except KeyError:
-        raise TokenNotDefineException(f"Invalid expression: {operator_id} character is not defined in calculator")
+        raise TokenNotDefineException(f"Invalid expression in get_operator: {operator_id} character is not defined in calculator")
 
 def get_right_annotation () -> tuple:
     """ returns a tuple containing all operators that function from right to left. (ex: ^)"""

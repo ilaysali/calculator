@@ -12,9 +12,6 @@ def tokenize(expression: str ) -> list:
 
     Returns:
         list: A list of tuples containing  if operator -(Priority, ID, Type) if number -(value,Number)  .
-
-    Raises:
-        TokenNotDefineException: If the expression contains a character that is not defined.
     """
 
     lst = []
@@ -36,5 +33,7 @@ def tokenize(expression: str ) -> list:
             lst.append(token_tuple)
 
     if number != "":
+        whole_number = (number, "Number")
+        validate_input(whole_number, lst[-1] if lst else None)
         lst.append((number, "Number"))
     return lst
