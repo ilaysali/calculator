@@ -56,9 +56,6 @@ OPERATOR_CONFIG = {
 # Automatically generate the reverse map with only (unique ID:operator)
 ID_TO_OPERATORS = {value[1]: key for key, value in OPERATOR_CONFIG.items()}
 
-# A tuple containing ALL operators that are functioning by right to left logic
-RIGHT_ANNOTATION = ("^",)
-
 def get_operator_config(operator: str) -> tuple:
     """
     Retrieves the full configuration tuple (Priority, ID, Type) for a given operator.
@@ -114,10 +111,6 @@ def get_operator(operator_id: int) -> str:
         return ID_TO_OPERATORS[operator_id]
     except KeyError:
         raise TokenNotDefineException(f"Invalid expression in get_operator: {operator_id} character is not defined in calculator")
-
-def get_right_annotation() -> tuple:
-    """ returns a tuple containing all operators that function from right to left. (ex: ^)"""
-    return RIGHT_ANNOTATION
 
 def is_operator(operator: str) -> bool:
     """ checks if string is an operator, '(' , ')' is not included as operators """

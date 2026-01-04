@@ -1,4 +1,3 @@
-from utility import get_operator, get_right_annotation
 from Exceptions import MismatchedParenthesesException
 
 
@@ -24,9 +23,7 @@ def parser(tokenize_expression: list) -> list:
             output.append(token)
 
         elif token[-1] == "Operator" or token[-1] == "Unary":
-            while (operators and operators[-1][-1] != "LParentheses" and
-                (operators[-1][0] > token[0] or (operators[-1][0] == token[0] and
-                    get_operator(token[1]) not in get_right_annotation()))):
+            while operators and operators[-1][-1] != "LParentheses" and operators[-1][0] >= token[0]:
                 output.append(operators.pop())
             operators.append(token)
 
